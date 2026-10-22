@@ -2,3 +2,7 @@
 node_modules
 data/blog.json
 /blog/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
