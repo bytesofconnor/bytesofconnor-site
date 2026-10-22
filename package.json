@@ -3,10 +3,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-posts.mjs"
+    "build": "node scripts/build-posts.mjs",
+    "lint": "node --check scripts/build-posts.mjs js/blog.js js/quotes.js js/pixel-field.js tests/smoke.spec.mjs playwright.config.mjs",
+    "test:smoke": "playwright test"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
     "marked": "^15.0.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
   }
 }
