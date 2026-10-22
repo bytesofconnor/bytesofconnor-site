@@ -1,7 +1,7 @@
 ---
 title: Keep in touch with your software
 date: 2026-10-22
-description: It's important to resist falling out-of-touch with those college friends that matter to you. Just like it's important to resist falling out-of-touch with the software your building at work. Choose moments to dive deeper into code, learn more, and grow alongside your software.
+description: It's important to resist falling out-of-touch with those college friends that matter to you. Just like it's important to resist falling out-of-touch with the software your building at work.
 image: ''
 draft: false
 ---
