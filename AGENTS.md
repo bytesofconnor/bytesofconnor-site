@@ -45,7 +45,7 @@ PR bodies need Summary, Verification, Blast Radius headings (checked in CI; Depe
 - Keep copy short and plain.
 - Treat published posts as real writing. Fix typos in files you already touch; do not rewrite voice.
 - Leave generated `data/blog.json` and `blog/` uncommitted.
-- Leave Sveltia (`admin/config.yml`) pointed at `bytesofconnor/site` / `main` unless the task is to change the CMS.
+- Leave Sveltia (`admin/config.yml`) pointed at `bytesofconnor/bytesofconnor-site` / `main` unless the task is to change the CMS.
 
 ## Do not
 

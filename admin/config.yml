@@ -2,7 +2,7 @@
 
 backend:
   name: github
-  repo: bytesofconnor/site
+  repo: bytesofconnor/bytesofconnor-site
   branch: main
   auth_methods:
     - token
