@@ -15,13 +15,6 @@ jobs:
     name: auto-merge
     runs-on: ubuntu-latest
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        if: github.event.pull_request.user.login == 'dependabot[bot]'
-        uses: dependabot/fetch-metadata@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Enable squash auto-merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -30,7 +23,6 @@ jobs:
           HEAD_REF: ${{ github.head_ref }}
           AUTHOR: ${{ github.event.pull_request.user.login }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
         run: |
           set -euo pipefail
 
@@ -39,32 +31,28 @@ jobs:
             exit 0
           fi
 
-          eligible=0
-          if [[ "${HEAD_REF}" == cursor/* ]]; then
-            eligible=1
-          fi
+          check_paths=0
           if [[ "${AUTHOR}" == "dependabot[bot]" ]]; then
-            case "${UPDATE_TYPE}" in
-              version-update:semver-patch|version-update:semver-minor)
-                eligible=1
-                ;;
-            esac
-          fi
-          if [[ "${eligible}" -ne 1 ]]; then
-            echo "skip: not a cursor/* branch or a minor/patch Dependabot update"
+            check_paths=0
+          elif [[ "${HEAD_REF}" == cursor/* ]]; then
+            check_paths=1
+          else
+            echo "skip: not a cursor/* branch or Dependabot"
             exit 0
           fi
 
-          diff_files="$(gh pr diff "${PR_NUMBER}" --repo "${BASE_REPO}" --name-only)"
-          while IFS= read -r file; do
-            [[ -z "${file}" ]] && continue
-            case "${file}" in
-              .github/*|.cursor/rules/*|AGENTS.md)
-                echo "skip: ${file} is excluded from auto-merge"
-                exit 0
-                ;;
-            esac
-          done <<< "${diff_files}"
+          if [[ "${check_paths}" -eq 1 ]]; then
+            diff_files="$(gh pr diff "${PR_NUMBER}" --repo "${BASE_REPO}" --name-only)"
+            while IFS= read -r file; do
+              [[ -z "${file}" ]] && continue
+              case "${file}" in
+                .github/*|.cursor/rules/*|AGENTS.md)
+                  echo "skip: ${file} is excluded from auto-merge"
+                  exit 0
+                  ;;
+              esac
+            done <<< "${diff_files}"
+          fi
 
           if ! merge_output="$(gh pr merge "${PR_NUMBER}" --repo "${BASE_REPO}" --auto --squash 2>&1)"; then
             printf '%s\n' "${merge_output}"
