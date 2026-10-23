@@ -1,0 +1,76 @@
+# Same-repo auto-merge. pull_request only, never pull_request_target.
+# --auto waits for the required checks status; this job does not deploy.
+
+name: Auto-merge
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    name: auto-merge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable squash auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_REPO: ${{ github.repository }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          HEAD_REF: ${{ github.head_ref }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${HEAD_REPO}" || "${HEAD_REPO}" != "${BASE_REPO}" ]]; then
+            echo "skip: head repo is not the base repo"
+            exit 0
+          fi
+
+          eligible=0
+          if [[ "${HEAD_REF}" == cursor/* ]]; then
+            eligible=1
+          fi
+          if [[ "${AUTHOR}" == "dependabot[bot]" ]]; then
+            case "${UPDATE_TYPE}" in
+              version-update:semver-patch|version-update:semver-minor)
+                eligible=1
+                ;;
+            esac
+          fi
+          if [[ "${eligible}" -ne 1 ]]; then
+            echo "skip: not a cursor/* branch or a minor/patch Dependabot update"
+            exit 0
+          fi
+
+          diff_files="$(gh pr diff "${PR_NUMBER}" --repo "${BASE_REPO}" --name-only)"
+          while IFS= read -r file; do
+            [[ -z "${file}" ]] && continue
+            case "${file}" in
+              .github/*|.cursor/rules/*|AGENTS.md)
+                echo "skip: ${file} is excluded from auto-merge"
+                exit 0
+                ;;
+            esac
+          done <<< "${diff_files}"
+
+          if ! merge_output="$(gh pr merge "${PR_NUMBER}" --repo "${BASE_REPO}" --auto --squash 2>&1)"; then
+            printf '%s\n' "${merge_output}"
+            if printf '%s\n' "${merge_output}" | grep -qi 'already enabled'; then
+              exit 0
+            fi
+            exit 1
+          fi
+          printf '%s\n' "${merge_output}"
