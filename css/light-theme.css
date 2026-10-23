@@ -753,6 +753,22 @@ nav.navigation,
   transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
+#work-section .project-item[data-project="minny"] {
+  --project-border: linear-gradient(155deg, #0d2a2e 0%, #3d8a86 48%, #c4a46a 100%);
+}
+
+#work-section .project-item[data-project="minny"]:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, #2a7a74 26%, transparent);
+}
+
+#work-section .project-item[data-project="minny"] .project-item-link {
+  color: #2f6f6a;
+}
+
+#work-section .project-item[data-project="minny"] .project-item-link:hover {
+  color: #0d2a2e;
+}
+
 #work-section .project-item[data-project="vizzy"] {
   --project-border: linear-gradient(160deg, #2c4a5e 0%, #7aa3b8 48%, #c4a46a 100%);
 }

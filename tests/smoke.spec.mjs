@@ -63,3 +63,28 @@ test('blog post page renders', async ({ page }) => {
 
 	expect(errors, `console errors on ${path}:\n${errors.join('\n')}`).toEqual([]);
 });
+
+test('projects area includes Minny Agents', async ({ page }, testInfo) => {
+	const errors = collectPageFaults(page);
+	await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+	const section = page.locator('#work-section');
+	await section.scrollIntoViewIfNeeded();
+
+	const card = section.locator('.project-item[data-project="minny"]');
+	await expect(card.getByRole('heading', { name: 'Minny Agents' })).toBeVisible();
+	await expect(card.getByRole('link', { name: 'Visit site →' })).toHaveAttribute(
+		'href',
+		'https://minnyagents.com'
+	);
+
+	const shot = await section.screenshot();
+	await testInfo.attach(`projects-${testInfo.project.name}`, {
+		body: shot,
+		contentType: 'image/png',
+	});
+	const out = `test-results/projects-area-${testInfo.project.name}.png`;
+	await section.screenshot({ path: out });
+
+	expect(errors, `console errors on /#work-section:\n${errors.join('\n')}`).toEqual([]);
+});
