@@ -6,7 +6,7 @@ image: ''
 draft: false
 ---
 
-Worktrees have become an integral part of my workflow, because they have been allowing me to minimize the impact of context switching during my workflow. Recently I've been working on a fast paced project, and I've found myself needing to move through tickets quickly, switching branches more often, and reviewing others' work quickly. This typically has meant findings ways to manage multiple tasks in parallel. I need to be able to quickly check in on one branch, while I have another agent busy working on another branch.
+Worktrees have become an integral part of my workflow, because they have been allowing me to minimize the impact of context switching during my workflow. Recently I've been working on a fast paced project, and I've found myself needing to move through tickets quickly, switching branches more often, and reviewing others' work quickly. This typically has meant finding ways to manage multiple tasks in parallel. I need to be able to quickly check in on one branch, while I have another agent busy working on another branch.
 
 I've known about worktrees for some time, but I never really took the leap to fully adopt them into my workflow, despite hearing about their many benefits, many times. Even when the agentic development wave really took off in the beginning of this year, and worktrees became an even hotter topic, I managed to put off adopting them for months. I did my fair share of experimentation, but nothing seemed to stick for me. It seems it took a new project and more aggressive deadlines for me to jump fully in and not look back.
 

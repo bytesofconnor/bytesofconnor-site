@@ -6,7 +6,7 @@ image: ''
 draft: false
 ---
 
-Building software is in the middle of a full fledge transformation.  At times, it has felt like a metamorphosis. In some sense, this reminds me of my relationships with friends from college. We keep in touch, and we wouldn't be the same without everything we've gone through together. But we don't share daily highs and lows together in the same way we used to. In many ways, the game has changed. Allow me to elaborate on the deeper parallels this has with agentic software engineering in 2026. 
+Building software is in the middle of a full-fledged transformation.  At times, it has felt like a metamorphosis. In some sense, this reminds me of my relationships with friends from college. We keep in touch, and we wouldn't be the same without everything we've gone through together. But we don't share daily highs and lows together in the same way we used to. In many ways, the game has changed. Allow me to elaborate on the deeper parallels this has with agentic software engineering in 2026. 
 
 After graduation, at least for me, I was quite devastated on the car ride home back to Minneapolis, and I couldn't stop thinking about all the people, places, and moments that are officially behind me. As days went on, my mind naturally began focussing on the life I had in front of me. I went for vacation, began a new job, and moved into a new apartment. My new life had jumped into full swing. In this new life, I didn't get to see my college friends everyday anymore. Even with my best of friends from college, we had to navigate keeping in touch via text, facetimes, and planned trips. The ease-of-communication was simply not there anymore, unfortunately. A little thing called _effort_ became essential for us to keep in touch.
 
