@@ -88,3 +88,22 @@ test('projects area includes Minny Agents', async ({ page }, testInfo) => {
 
 	expect(errors, `console errors on /#work-section:\n${errors.join('\n')}`).toEqual([]);
 });
+
+test('hero shows the current tagline', async ({ page }, testInfo) => {
+	const errors = collectPageFaults(page);
+	await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+	const hero = page.locator('#home-section');
+	await expect(hero.locator('.hero-subtitle')).toHaveText(
+		'Helping products come into focus.'
+	);
+
+	const shot = await hero.screenshot();
+	await testInfo.attach(`hero-${testInfo.project.name}`, {
+		body: shot,
+		contentType: 'image/png',
+	});
+	await hero.screenshot({ path: `test-results/hero-${testInfo.project.name}.png` });
+
+	expect(errors, `console errors on /#home-section:\n${errors.join('\n')}`).toEqual([]);
+});
