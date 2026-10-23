@@ -27,6 +27,10 @@ npm run test:smoke    # Playwright: home + one post, 1280×800 and 390×844
 
 CI job `checks` on pull requests runs install, lint, build, and the smoke test.
 
+Same-repo `cursor/*` pull requests, and Dependabot semver-minor or semver-patch pull requests, enable squash auto-merge.
+Forks, semver-major updates, and diffs that change `.github/**`, `.cursor/rules/**`, or `AGENTS.md` do not.
+GitHub waits for the required `checks` job before the merge.
+
 ## How to verify
 
 Run the commands above. For UI work, open `/` and `/blog/<slug>/` after `npm run build`, click the real controls, and check desktop (1280×800) and mobile (390×844). “It builds” is not enough for a visual change.
