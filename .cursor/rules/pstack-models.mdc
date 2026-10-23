@@ -2,7 +2,7 @@
 description: pstack per-role model choices (overrides skill defaults)
 alwaysApply: true
 ---
-# pstack model configuration. Cursor models only (other-model quota exhausted).
+# pstack model configuration. Cursor models first; non-Cursor models are opt-in only.
 # budget: large (xhigh)
 feature, refactoring: grok-4.7-xhigh-fast
 bug-fix: grok-4.7-xhigh-fast
@@ -21,3 +21,7 @@ arena cross-judge pool: grok-4.7-xhigh-fast, composer-2.5
 swarm workers: grok-4.7-xhigh-fast
 architect runners: grok-4.7-xhigh-fast, composer-2.5
 interrogate reviewers: grok-4.7-xhigh-fast, composer-2.5
+
+# Any pstack role or subagent not listed above defaults to grok-4.7-xhigh-fast.
+# Non-Cursor models (Claude, GPT, etc.) are opt-in upgrades only, for a task that clearly needs one.
+# If any run is refused for usage, retry immediately on grok-4.7, then grok-4.6, then composer-2.5.
