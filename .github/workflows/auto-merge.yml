@@ -20,8 +20,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_REPO: ${{ github.repository }}
           HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
-          HEAD_REF: ${{ github.head_ref }}
-          AUTHOR: ${{ github.event.pull_request.user.login }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           set -euo pipefail
@@ -29,29 +27,6 @@ jobs:
           if [[ -z "${HEAD_REPO}" || "${HEAD_REPO}" != "${BASE_REPO}" ]]; then
             echo "skip: head repo is not the base repo"
             exit 0
-          fi
-
-          check_paths=0
-          if [[ "${AUTHOR}" == "dependabot[bot]" ]]; then
-            check_paths=0
-          elif [[ "${HEAD_REF}" == cursor/* ]]; then
-            check_paths=1
-          else
-            echo "skip: not a cursor/* branch or Dependabot"
-            exit 0
-          fi
-
-          if [[ "${check_paths}" -eq 1 ]]; then
-            diff_files="$(gh pr diff "${PR_NUMBER}" --repo "${BASE_REPO}" --name-only)"
-            while IFS= read -r file; do
-              [[ -z "${file}" ]] && continue
-              case "${file}" in
-                .github/*|.cursor/rules/*|AGENTS.md)
-                  echo "skip: ${file} is excluded from auto-merge"
-                  exit 0
-                  ;;
-              esac
-            done <<< "${diff_files}"
           fi
 
           if ! merge_output="$(gh pr merge "${PR_NUMBER}" --repo "${BASE_REPO}" --auto --squash 2>&1)"; then

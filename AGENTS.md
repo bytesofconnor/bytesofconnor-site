@@ -27,9 +27,9 @@ npm run test:smoke    # Playwright: home + one post, 1280×800 and 390×844
 
 CI job `checks` on pull requests runs install, lint, build, and the smoke test.
 
-Same-repo `cursor/*` pull requests enable squash auto-merge, except when the diff changes `.github/**`, `.cursor/rules/**`, or `AGENTS.md`.
-Same-repo Dependabot pull requests enable squash auto-merge for every update, including major bumps and workflow files.
-GitHub waits for the required `checks` job before the merge. Forks do not auto-merge.
+Every same-repo pull request enables squash auto-merge once the required `checks` job passes.
+That includes `cursor/*` pull requests that change `.github/**`, `.cursor/rules/**`, or `AGENTS.md`, any other branch from this repo, and every Dependabot update.
+Pull requests from forks do not auto-merge.
 
 ## How to verify
 
