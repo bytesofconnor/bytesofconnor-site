@@ -27,9 +27,9 @@ npm run test:smoke    # Playwright: home + one post, 1280×800 and 390×844
 
 CI job `checks` on pull requests runs install, lint, build, and the smoke test.
 
-Same-repo `cursor/*` pull requests, and Dependabot semver-minor or semver-patch pull requests, enable squash auto-merge.
-Forks, semver-major updates, and diffs that change `.github/**`, `.cursor/rules/**`, or `AGENTS.md` do not.
-GitHub waits for the required `checks` job before the merge.
+Same-repo `cursor/*` pull requests enable squash auto-merge, except when the diff changes `.github/**`, `.cursor/rules/**`, or `AGENTS.md`.
+Same-repo Dependabot pull requests enable squash auto-merge for every update, including major bumps and workflow files.
+GitHub waits for the required `checks` job before the merge. Forks do not auto-merge.
 
 ## How to verify
 
