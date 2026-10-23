@@ -2,7 +2,7 @@
 
 Personal site for Connor Barrett. Vanilla HTML, CSS, and JavaScript. Vercel project `my-webflow-portfolio` auto-deploys `main` to [www.bytesofconnor.online](https://www.bytesofconnor.online) and [flowconnor.dev](https://flowconnor.dev), and builds a preview for every PR.
 
-Agents should work under /poteto-mode, and pstack model roles are set in `.cursor/rules/pstack-models.mdc` (Cursor models only).
+Agents should work under /poteto-mode, and pstack model roles are set in `.cursor/rules/pstack-models.mdc` (Cursor first).
 
 ## Stack
 
