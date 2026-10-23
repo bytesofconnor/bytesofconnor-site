@@ -38,7 +38,7 @@ Dependabot opens one weekly pull request for npm and one for GitHub Actions. Bot
 
 Run the commands above. For UI work, open `/` and `/blog/<slug>/` after `npm run build`, click the real controls, and check desktop (1280×800) and mobile (390×844). “It builds” is not enough for a visual change.
 
-PR bodies must include **Verification** and **Blast Radius** (see `.github/pull_request_template.md`).
+PR bodies need Summary, Verification, Blast Radius headings (checked in CI; Dependabot exempt).
 
 ## Do
 
