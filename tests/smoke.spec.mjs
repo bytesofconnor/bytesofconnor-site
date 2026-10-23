@@ -47,7 +47,62 @@ test('home page renders and lists a post', async ({ page }) => {
 	await expect(page.locator('#blog-feed .blog-item').first()).toBeVisible();
 	await expect(page.locator('#blog-feed .blog-item-title').first()).toHaveText(post.title);
 
+	const homeHtml = readFileSync('index.html', 'utf8');
+	expect(homeHtml).toContain(post.title);
+	expect(homeHtml).toContain(`blog/${encodeURIComponent(post.slug)}/`);
+	expect(homeHtml).not.toContain('New posts coming soon.');
+
 	expect(errors, `console errors on /:\n${errors.join('\n')}`).toEqual([]);
+});
+
+test('home feed updates when data/blog.json loads', async ({ page }) => {
+	const post = publishedPost();
+	const title = `${post.title} live`;
+	await page.route('**/data/blog.json', async (route) => {
+		const response = await route.fetch();
+		const payload = await response.json();
+		payload.posts[0].title = title;
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify(payload),
+		});
+	});
+	const seen = page.waitForResponse((response) => response.url().includes('data/blog.json'));
+	await page.goto('/', { waitUntil: 'domcontentloaded' });
+	await seen;
+	await page.evaluate(() => SiteBlog.renderList(document.getElementById('blog-feed')));
+	await expect(page.locator('#blog-feed .blog-item-title').first()).toHaveText(title);
+});
+
+test('home feed keeps built posts when the list request fails', async ({ page }) => {
+	const post = publishedPost();
+	await page.route('**/data/blog.json', (route) => route.abort());
+	const failed = page.waitForEvent('requestfailed', {
+		predicate: (request) => request.url().includes('data/blog.json'),
+	});
+	await page.goto('/', { waitUntil: 'domcontentloaded' });
+	await failed;
+	await page.evaluate(() => SiteBlog.renderList(document.getElementById('blog-feed')));
+	await expect(page.locator('#blog-feed .blog-item-title').first()).toHaveText(post.title);
+	await expect(page.getByText('New posts coming soon.')).toHaveCount(0);
+});
+
+test('home feed keeps built posts when the list is empty', async ({ page }) => {
+	const post = publishedPost();
+	await page.route('**/data/blog.json', (route) =>
+		route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: '{"posts":[]}',
+		})
+	);
+	const seen = page.waitForResponse((response) => response.url().includes('data/blog.json'));
+	await page.goto('/', { waitUntil: 'domcontentloaded' });
+	await seen;
+	await page.evaluate(() => SiteBlog.renderList(document.getElementById('blog-feed')));
+	await expect(page.locator('#blog-feed .blog-item-title').first()).toHaveText(post.title);
+	await expect(page.getByText('New posts coming soon.')).toHaveCount(0);
 });
 
 test('blog post page renders', async ({ page }) => {

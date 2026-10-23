@@ -48,6 +48,7 @@
 		}
 
 		if (!posts.length) {
+			if (root.querySelector('.blog-item')) return;
 			root.innerHTML = '<p class="blog-empty-text">New posts coming soon.</p>';
 			root.classList.add('blog-empty');
 			root.classList.remove('blog-feed');

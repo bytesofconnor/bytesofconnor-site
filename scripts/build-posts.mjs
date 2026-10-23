@@ -1,4 +1,4 @@
-import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
@@ -65,6 +65,71 @@ function escapeHtml(value) {
 		.replace(/</g, '&lt;')
 		.replace(/>/g, '&gt;')
 		.replace(/"/g, '&quot;');
+}
+
+function feedHtml(posts) {
+	return posts
+		.map(function (post) {
+			const date = formatDate(post.date);
+			const excerpt = post.description
+				? '<p class="blog-item-excerpt">' + escapeHtml(post.description) + '</p>'
+				: '';
+			return (
+				'<a class="blog-item" href="blog/' +
+				encodeURIComponent(post.slug) +
+				'/">' +
+				(date ? '<span class="blog-item-date">' + escapeHtml(date) + '</span>' : '') +
+				'<span class="blog-item-title">' +
+				escapeHtml(post.title) +
+				'</span>' +
+				excerpt +
+				'</a>'
+			);
+		})
+		.join('');
+}
+
+function injectHomepageFeed(html, posts) {
+	const startMarker = '<!-- blog-feed:start -->';
+	const endMarker = '<!-- blog-feed:end -->';
+	const startAt = html.indexOf(startMarker);
+	const endAt = html.indexOf(endMarker);
+	if (startAt === -1 || endAt === -1 || endAt < startAt) {
+		throw new Error('index.html is missing blog-feed:start or blog-feed:end');
+	}
+	const lineStart = html.lastIndexOf('\n', startAt) + 1;
+	const indent = html.slice(lineStart, startAt);
+	if (!/^[\t ]*$/.test(indent)) {
+		throw new Error('blog-feed:start must be the first content on its line');
+	}
+	const className = posts.length ? 'blog-feed' : 'blog-empty';
+	const inner = posts.length
+		? feedHtml(posts)
+		: '<p class="blog-empty-text">New posts coming soon.</p>';
+	const block =
+		startMarker +
+		'\n' +
+		indent +
+		'<div class="' +
+		className +
+		'" id="blog-feed">' +
+		inner +
+		'</div>\n' +
+		indent +
+		endMarker;
+	return html.slice(0, startAt) + block + html.slice(endAt + endMarker.length);
+}
+
+async function writeHomepageFeed(posts) {
+	const indexPath = join(root, 'index.html');
+	const html = await readFile(indexPath, 'utf8');
+	const next = injectHomepageFeed(html, posts);
+	if (next !== html) {
+		const temporary = `${indexPath}.tmp`;
+		await writeFile(temporary, next);
+		await rename(temporary, indexPath);
+	}
+	console.log('Updated index.html');
 }
 
 function toAbsoluteUrl(path) {
@@ -214,6 +279,7 @@ async function main() {
 
 	await writeFile(outFile, `${JSON.stringify({ posts }, null, 2)}\n`);
 	console.log(`Wrote ${posts.length} post(s) to data/blog.json and blog/<slug>/`);
+	await writeHomepageFeed(posts);
 }
 
 main().catch((error) => {
