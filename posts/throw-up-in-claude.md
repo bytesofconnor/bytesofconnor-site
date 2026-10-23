@@ -6,7 +6,7 @@ image: ''
 draft: false
 ---
 
-On some project work recently, I'd been churning out a lot of code for a handful primitive UI components all week. I needed our core primitives to adhere to our new figma design spec, while still following internal code patterns, all the while they needed to pass accessibility testing with flying colors. For this specific type of work I had found myself deviating from my traditional agentic workflow, which had largely been spec driven development. 
+On some project work recently, I'd been churning out a lot of code for a handful of primitive UI components all week. I needed our core primitives to adhere to our new figma design spec, while still following internal code patterns, all the while they needed to pass accessibility testing with flying colors. For this specific type of work I had found myself deviating from my traditional agentic workflow, which had largely been spec driven development. 
 
 Spec driven development can be an over-loaded term sometimes because it means something different to everyone, but my typical workflow involved a series of claude skills that walked me through gathering requirements in a Jira ticket or Figma file, agreeing on an implementation plan, and over-seeing the execution and review of that code before opening a PR. This workflow has felt relatively sane and overall it's been effective. But with my recent primitive component audit work, the spec was Figma only, and I didn't have developer access to the Figma file. A lot more of the plan-creation overhead fell to me, the developer.
 
