@@ -95,7 +95,7 @@ test('hero shows the current tagline', async ({ page }, testInfo) => {
 
 	const hero = page.locator('#home-section');
 	await expect(hero.locator('.hero-subtitle')).toHaveText(
-		'Helping products come into focus.'
+		'Bringing fuzzy ideas into focus, one pixel at a time.'
 	);
 
 	const shot = await hero.screenshot();
