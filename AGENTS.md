@@ -31,6 +31,9 @@ Every same-repo pull request enables squash auto-merge once the required `checks
 That includes `cursor/*` pull requests that change `.github/**`, `.cursor/rules/**`, or `AGENTS.md`, any other branch from this repo, and every Dependabot update.
 Pull requests from forks do not auto-merge.
 
+Vercel skips preview builds for `dependabot/*` and `cursor/*`, and skips a build when `HEAD^` exists and that commit changes no files. Production on `main` still builds when files changed. A missing `HEAD^` builds.
+Dependabot opens one weekly pull request for npm and one for GitHub Actions. Both groups include major updates.
+
 ## How to verify
 
 Run the commands above. For UI work, open `/` and `/blog/<slug>/` after `npm run build`, click the real controls, and check desktop (1280×800) and mobile (390×844). “It builds” is not enough for a visual change.

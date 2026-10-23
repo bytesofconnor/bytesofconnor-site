@@ -3,6 +3,7 @@
   "framework": null,
   "installCommand": "npm install",
   "buildCommand": "npm run build",
+  "ignoreCommand": "bash scripts/vercel-ignore.sh",
   "outputDirectory": ".",
   "redirects": [
     {
