@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
 
 permissions:
   contents: read
@@ -14,6 +15,38 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+
+      - name: Prove PR body check rejects a missing section
+        run: |
+          set -euo pipefail
+          if .github/scripts/pr-body-check.sh <<'BODY'
+          ## Summary
+          x
+          ## Verification
+          x
+          BODY
+          then
+            echo "PR body check accepted a body without Blast Radius." >&2
+            exit 1
+          fi
+
+      - name: Prove PR body check accepts the three sections
+        run: |
+          set -euo pipefail
+          .github/scripts/pr-body-check.sh <<'BODY'
+          ## Summary
+          x
+          ## Verification
+          x
+          ## Blast Radius
+          x
+          BODY
+
+      - name: Check this PR body
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: printf '%s\n' "$PR_BODY" | .github/scripts/pr-body-check.sh
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
