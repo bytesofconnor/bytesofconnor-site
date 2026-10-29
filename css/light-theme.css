@@ -653,7 +653,7 @@ nav.navigation,
   color: var(--text-secondary);
 }
 
-.schedule-new-tab {
+#cal-booking-link.schedule-new-tab {
   display: inline-block;
   margin-top: 16px;
   font-size: 13px;
@@ -662,8 +662,17 @@ nav.navigation,
   text-decoration: none;
 }
 
-.schedule-new-tab:hover {
+#cal-booking-link.schedule-new-tab:hover {
   color: var(--accent-cta);
+}
+
+#cal-booking-link.schedule-new-tab:focus-visible {
+  outline: 2px solid var(--accent-cta);
+  outline-offset: 2px;
+}
+
+#cal-booking-link .schedule-book-label {
+  display: none;
 }
 
 .cal-embed-wrapper {
@@ -689,10 +698,6 @@ nav.navigation,
   border: 0 !important;
   background: var(--bg-panel) !important;
   margin: 0;
-}
-
-#cal-booking-link {
-  margin-top: 16px;
 }
 
 /* ——— Typography blocks ——— */
@@ -1338,6 +1343,59 @@ blockquote {
 
   .schedule-section .work-wrapper {
     display: none;
+  }
+
+  #cal-booking-link.schedule-new-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 22rem;
+    min-height: 48px;
+    margin-top: 20px;
+    padding: 12px 18px;
+    border: 1px solid var(--accent-cta);
+    border-radius: 0;
+    background-color: var(--accent-cta);
+    box-shadow: none;
+    color: var(--text-on-brand);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  #cal-booking-link.schedule-new-tab:hover {
+    border-color: var(--accent-cta-hover);
+    background-color: var(--accent-cta-hover);
+    color: var(--text-on-brand);
+    box-shadow: var(--shadow-sm);
+  }
+
+  #cal-booking-link.schedule-new-tab:active {
+    border-color: var(--accent-cta-hover);
+    background-color: var(--accent-cta-hover);
+    color: var(--text-on-brand);
+    box-shadow: none;
+  }
+
+  #cal-booking-link.schedule-new-tab:focus-visible {
+    border-color: var(--accent-cta-hover);
+    background-color: var(--accent-cta-hover);
+    color: var(--text-on-brand);
+    outline: 2px solid var(--accent-cta);
+    outline-offset: 2px;
+  }
+
+  #cal-booking-link .schedule-tab-hint {
+    display: none;
+  }
+
+  #cal-booking-link .schedule-book-label {
+    display: inline;
   }
 
   #home-section .hero-grid.w-layout-grid {
