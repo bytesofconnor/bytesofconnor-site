@@ -1381,10 +1381,6 @@ blockquote {
 }
 
 @media screen and (max-width: 479px) {
-  #home-section .hero-content-wrapper {
-    padding: 68px 16px 32px;
-  }
-
   #home-section .hero-avatar-link {
     width: 60px;
     height: 60px;
@@ -2300,5 +2296,93 @@ blockquote {
 
   .footer-sloth-ring {
     animation: none;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  #home-section {
+    margin-bottom: 16px;
+  }
+
+  #home-section .hero-content-wrapper {
+    padding: 16px;
+    overflow-wrap: break-word;
+  }
+
+  #home-section .hero-heading-text {
+    min-width: 0;
+  }
+
+  #home-section .hero-social-links {
+    margin-top: 16px;
+  }
+
+  #home-section .hero-social-links .social-text {
+    min-width: 0;
+    overflow-wrap: break-word;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  #thoughts-section {
+    margin-bottom: 16px;
+  }
+
+  #thoughts-section .work-section-wrapper,
+  #thoughts-section .work-wrapper {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  #thoughts-section .work-section-wrapper {
+    padding: 16px;
+  }
+
+  #thoughts-section .heading-2 {
+    margin: 0 0 8px;
+  }
+
+  #thoughts-section .paragraph-2 {
+    margin: 0;
+  }
+
+  #thoughts-section .blog-feed {
+    padding: 0;
+    gap: 16px;
+  }
+
+  #thoughts-section .blog-item,
+  #thoughts-section .blog-item-title,
+  #thoughts-section .blog-item-excerpt {
+    min-width: 0;
+  }
+
+  #thoughts-section .blog-item {
+    padding: 16px;
+  }
+
+  #schedule-section {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-inline: 10px;
+  }
+
+  #schedule-section .work-section-wrapper,
+  #schedule-section .work-wrapper {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  #schedule-section .work-section-wrapper {
+    padding: 16px;
+  }
+
+  #schedule-section .heading-2 {
+    margin: 0 0 8px;
+  }
+
+  #schedule-section .paragraph-2 {
+    margin: 0;
   }
 }
