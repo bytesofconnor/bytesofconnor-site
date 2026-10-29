@@ -54,3 +54,13 @@ PR bodies need Summary, Verification, Blast Radius headings (checked in CI; Depe
 - Edit CI, Playwright tests, or lint to make a red check look green. Fix the product instead.
 - Change `posts/*.md` unless the task is about a post. The CMS writes those files to `main`.
 - Expand this into a framework, add analytics, or add packages the site does not need.
+
+## Factory
+
+Production is [www.bytesofconnor.online](https://www.bytesofconnor.online). [flowconnor.dev](https://flowconnor.dev) serves the same site. The Vercel project `my-webflow-portfolio` deploys `main`.
+
+The required CI job is `checks`.
+
+Same-repo pull requests squash auto-merge once `checks` passes. Forks wait. Skip a pull request that has the `hold` label. `.github/workflows/auto-merge.yml` does not read labels, so leave a `hold` pull request unmerged.
+
+While `ROADMAP.md` has an unchecked Backlog item and Blockers has no open item, ship the top Backlog item. Open a cloud agent pull request, let it auto-merge, then verify production. Stop when Backlog is empty, when Blockers has an open item, when CI is red and a code fix will not turn it green, or when the next step needs a purchase, a secret, or a destructive action. After each ship, check the item off and add one line under Done with the date. Never invent clients, metrics, or testimonials.
