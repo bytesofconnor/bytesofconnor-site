@@ -3,7 +3,7 @@ title: 'Grok bot: a window into the future'
 date: 2026-11-02
 description: ''
 image: ''
-draft: false
+draft: true
 ---
 
 Over the past month or so, I've spent a lot of time exploring with 
