@@ -2,7 +2,7 @@
 title: Reflections on code review
 date: 2026-09-03
 description: Over the past few months, I've been hearing more and more chatter online and at work about how the days of manually reviewing code are behind us.
-image: ''
+image: /images/uploads/pasted-image-1794973712281.png
 draft: false
 ---
 
