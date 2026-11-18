@@ -2,7 +2,7 @@
 title: Finding an agentic balance
 date: 2026-09-01
 description: I've noticed that my workflow has consistently changed month-over-month for about the past year.
-image: ''
+image: /images/uploads/pasted-image-1794973545689.png
 draft: false
 ---
 
