@@ -2,7 +2,7 @@
 title: Throwing up in Claude
 date: 2026-09-09
 description: If followed by manual review iterations, this has been an effective strategy for shipping high quality PRs quickly without accumulating extensive comprehension debt.
-image: ''
+image: /images/uploads/pasted-image-1794973765439.png
 draft: false
 ---
 
