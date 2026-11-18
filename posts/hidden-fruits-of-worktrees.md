@@ -2,7 +2,7 @@
 title: Hidden fruits of worktrees
 date: 2026-08-20
 description: Worktrees have become an integral part of my workflow, because they have been allowing me to minimize the impact of context switching.
-image: ''
+image: /images/uploads/pasted-image-1794973650653.png
 draft: false
 ---
 
